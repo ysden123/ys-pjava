@@ -37,7 +37,7 @@ public class VoidFunc {
             int i = (new Random()).nextInt();
             System.out.printf("Random i = %d\n", i);
         });
-        
+
         f1(() -> {
             int i = (new Random()).nextInt();
             System.out.printf("Random i = %d\n", i);
