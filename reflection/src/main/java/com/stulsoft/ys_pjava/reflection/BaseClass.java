@@ -1,4 +1,8 @@
-package com.stulsoft.js_pjava.reflection;
+/*
+ * Copyright (c) 2016. Yuriy Stul
+ */
+
+package com.stulsoft.ys_pjava.reflection;
 
 /**
  * Some base class

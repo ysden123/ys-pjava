@@ -11,3 +11,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .idea/
+function/.gradle/3.2.1/taskArtifacts/fileHashes.bin
+/function/.gradle
+build
+.gradle

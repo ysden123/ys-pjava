@@ -1,4 +1,8 @@
-package com.stulsoft.js_pjava.reflection;
+/*
+ * Copyright (c) 2016. Yuriy Stul
+ */
+
+package com.stulsoft.ys_pjava.reflection;
 
 import java.lang.reflect.*;
 
@@ -16,10 +20,8 @@ public class Main4AccessTestClass {
             mi.setAccessible(true);
             Object valueOfMi = mi.get(t);
             System.out.println(String.format("valueOfMi is instance of %s", valueOfMi.getClass().getName()));
-            System.out.println(String.format("valueOfMi has value ", valueOfMi));
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+            System.out.println(String.format("valueOfMi has value %s", valueOfMi));
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
