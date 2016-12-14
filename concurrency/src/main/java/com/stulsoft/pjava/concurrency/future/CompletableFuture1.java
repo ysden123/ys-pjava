@@ -4,7 +4,9 @@
 
 package com.stulsoft.pjava.concurrency.future;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Playing with CompletableFuture
@@ -26,8 +28,8 @@ class CompletableFuture1 {
         return future;
     }
 
-    private static void supplyAsync1() {
-        System.out.println("==>supplyAsync1");
+    private static void supplyAsync() {
+        System.out.println("==>supplyAsync");
         try {
             String result = CompletableFuture.supplyAsync(CompletableFuture1::doWork)
                     .get(2, TimeUnit.SECONDS)
@@ -36,12 +38,20 @@ class CompletableFuture1 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("<==supplyAsync1");
+        System.out.println("<==supplyAsync");
+    }
+
+    private static void supplyAsyncWithCallback() {
+        System.out.println("==>supplyAsyncWithCallback");
+        CompletableFuture.runAsync(CompletableFuture1::doWork)
+                .thenAccept((Void) -> System.out.println("Done supplyAsyncWithCallback"));
+        System.out.println("<==supplyAsyncWithCallback");
     }
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("==>main");
-        supplyAsync1();
+        supplyAsync();
+        supplyAsyncWithCallback();
 
         Thread.sleep(5000);
         System.out.println("<==main");
