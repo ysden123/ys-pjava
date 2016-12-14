@@ -43,8 +43,14 @@ class CompletableFuture1 {
 
     private static void supplyAsyncWithCallback() {
         System.out.println("==>supplyAsyncWithCallback");
-        CompletableFuture.runAsync(CompletableFuture1::doWork)
-                .thenAccept((Void) -> System.out.println("Done supplyAsyncWithCallback"));
+        CompletableFuture.supplyAsync(CompletableFuture1::doWork)
+                .thenAccept(r -> {
+                    try {
+                        System.out.println("thenAccept: result is " + r.get());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
         System.out.println("<==supplyAsyncWithCallback");
     }
 
