@@ -11,13 +11,11 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Playing with CompletableFuture2
- * <p>
  * <pre>
- *     CompletableFuture
- *        supplyAsync
- *        thenApply
- *        thenAccept
- *
+ * CompletableFuture
+ *    supplyAsync
+ *    thenApply
+ *    thenAccept
  * </pre>
  * Created by Yuriy Stul on 12/14/2016.
  */

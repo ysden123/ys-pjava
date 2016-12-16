@@ -11,13 +11,11 @@ import java.util.concurrent.*;
 
 /**
  * Playing with CompletableFuture.
- * <p>
  * <pre>
  *     CompletableFuture
  *      get
  *      delayed handling
  * </pre>
- * <p>
  * Created by Yuriy Stul on 12/14/2016.
  */
 class CompletableFuture1 {

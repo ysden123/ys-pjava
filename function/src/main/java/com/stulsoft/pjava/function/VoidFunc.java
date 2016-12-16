@@ -2,7 +2,7 @@
  * Copyright (c) 2016. Yuriy Stul
  */
 
-package com.stulsoft.ys_pjava.function;
+package com.stulsoft.pjava.function;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -16,3 +16,5 @@ function/.gradle/3.2.1/taskArtifacts/fileHashes.bin
 build
 .gradle
 *.log
+api/
+out/
