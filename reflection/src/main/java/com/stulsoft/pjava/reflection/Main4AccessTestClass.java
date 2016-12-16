@@ -2,7 +2,7 @@
  * Copyright (c) 2016. Yuriy Stul
  */
 
-package com.stulsoft.ys_pjava.reflection;
+package com.stulsoft.pjava.reflection;
 
 import java.lang.reflect.*;
 

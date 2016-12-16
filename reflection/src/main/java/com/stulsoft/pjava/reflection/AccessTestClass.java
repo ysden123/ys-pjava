@@ -2,11 +2,11 @@
  * Copyright (c) 2016. Yuriy Stul
  */
 
-package com.stulsoft.ys_pjava.reflection;
+package com.stulsoft.pjava.reflection;
 
 /**
  * Test class with private member and method.
- *
+ * <p>
  * Created by Yuriy Stul on 11/10/2016.
  */
 final class AccessTestClass {
