@@ -12,12 +12,11 @@ import java.util.concurrent.*;
 /**
  * Playing with CompletableFuture.
  * <p>
- * Future
- * <ul>
- * <li>get</li>
- * <li>callback</li>
- * </ul>
- * </p>
+ * <pre>
+ *     CompletableFuture
+ *      get
+ *      delayed handling
+ * </pre>
  * <p>
  * Created by Yuriy Stul on 12/14/2016.
  */
@@ -47,21 +46,21 @@ class CompletableFuture1 {
      *
      * @return Future with result
      */
-    private static CompletableFuture<String> doWork2() {
-        CompletableFuture<String> future = new CompletableFuture<>();
+    private static String doWork2() {
         logger.info("==>doWork2");
+        String result = null;
         try {
             Thread.sleep(500);
-            future.complete("done");
+            result = "done";
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         logger.info("<==doWork2");
-        return future;
+        return result;
     }
 
     /**
-     * Call a work asynchronously and get a result
+     * Call a work asynchronously and get a result synchronously
      */
     private static void supplyAsync() {
         logger.info("==>supplyAsync");
@@ -76,62 +75,41 @@ class CompletableFuture1 {
         logger.info("<==supplyAsync");
     }
 
-    private static void maxAsync(){
-        logger.info("==>maxAsync");
-        CompletableFuture result = CompletableFuture.supplyAsync(CompletableFuture1::doWork2);
+    /**
+     * Call a work asynchronously and get a result after a time
+     */
+    private static void delayedHandling() {
+        logger.info("==>delayedHandling");
+
+        logger.info("Start a work");
+        CompletableFuture<String> result = CompletableFuture.supplyAsync(CompletableFuture1::doWork2);
         logger.debug("result.class is {}", result.getClass().getName());
         logger.info("Doing something...");
         try {
-            Thread.sleep(500);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        logger.info("Getting result");
-        CompletableFuture<String> value = null;
+        logger.info("Getting result...");
         try {
-            value = (CompletableFuture<String>)result.get(2, TimeUnit.SECONDS);
-            logger.info("Result value is {}", value.get());
+            String value = result.get(2, TimeUnit.SECONDS);
             logger.debug("value.class is {}", value.getClass().getName());
+            logger.info("result is {}", value);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info("<==maxAsync");
+        logger.info("<==delayedHandling");
     }
 
     /**
-     * Call a work asynchronously and get a result
+     * Maim entry point
+     * @param args arguments
+     * @throws InterruptedException something went wrong...
      */
-    private static void supplyAsyncWithCallback() {
-        System.out.println("==>supplyAsyncWithCallback");
-//        CompletableFuture.supplyAsync(CompletableFuture1::doWork1, )
-//                .thenAccept(r -> {
-//                    try {
-//                        logger.info("thenAccept: result is {}", r.get());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                });
-        logger.info("<==supplyAsyncWithCallback");
-    }
-
-//    private static void supplyAsyncWithCallback() {
-//        System.out.println("==>supplyAsyncWithCallback");
-//        CompletableFuture.supplyAsync(CompletableFuture1::doWork1)
-//                .thenAccept(r -> {
-//                    try {
-//                        logger.info("thenAccept: result is {}", r.get());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                });
-//        logger.info("<==supplyAsyncWithCallback");
-//    }
-//
     public static void main(String[] args) throws InterruptedException {
         logger.info("==>main");
         supplyAsync();
-//        supplyAsyncWithCallback();
-        maxAsync();
+        delayedHandling();
 
         Thread.sleep(5000);
         logger.info("<==main");
