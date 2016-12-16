@@ -12,8 +12,12 @@ subprojects {
 	repositories {
 		mavenCentral()
 	}
-	
+
+	def logVersion = '2.7'
 	dependencies {
-		testCompile group: 'junit', name: 'junit', version: '4.12'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: logVersion
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: logVersion
+        compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: logVersion
+        testCompile group: 'junit', name: 'junit', version: '4.12'
 	}
 }
