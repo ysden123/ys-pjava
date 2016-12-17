@@ -30,7 +30,7 @@ public class ErrHandling1 {
         logger.info("==>doWork1");
         try {
             Thread.sleep(500);
-            throw new RuntimeException("Failed doWork1");
+            future.completeExceptionally(new RuntimeException("Failed doWork1"));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
