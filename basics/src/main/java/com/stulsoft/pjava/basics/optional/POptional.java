@@ -39,6 +39,11 @@ class POptional {
         result = POptional.f1(TO_FAIL);
         showResult(result, TO_FAIL);
 
+        // Using filter
+        result = POptional.f1(TO_SUCCESS);
+        String textResult= result.filter(s -> s.contains("result")).isPresent()? "Success": "Filure";
+        System.out.printf("filter: textResult is %s\n", textResult);
+
         System.out.println("<==main");
     }
 }
