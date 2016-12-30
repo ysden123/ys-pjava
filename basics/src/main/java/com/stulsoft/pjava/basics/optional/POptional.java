@@ -14,6 +14,7 @@ import java.util.Optional;
 class POptional {
     private static final boolean TO_SUCCESS = false;
     private static final boolean TO_FAIL = true;
+
     private static Optional<String> f1(final boolean toFail) {
         System.out.println("==>f1");
         System.out.println("<==f1");
@@ -39,11 +40,22 @@ class POptional {
         result = POptional.f1(TO_FAIL);
         showResult(result, TO_FAIL);
 
-        // Using filter
+        // Usage of filter
         result = POptional.f1(TO_SUCCESS);
-        String textResult= result.filter(s -> s.contains("result")).isPresent()? "Success": "Filure";
+        String textResult = result.filter(s -> s.contains("result")).isPresent() ? "Success" : "Filure";
         System.out.printf("filter: textResult is %s\n", textResult);
 
+        // Usage of flatMap
+        Optional<Integer> lengthOpt = result.flatMap(s -> Optional.of(s.length()));
+        if (lengthOpt.isPresent()) {
+            System.out.printf("flatMap: length is %d\n", lengthOpt.get());
+        } else {
+            System.out.println("flatMap: length is undefined");
+        }
+
+        // Usage of map
+        Optional<Integer> lengthObj = result.map(s -> s.length());
+        System.out.printf("lengthObj is %s\n", lengthObj.isPresent() ? lengthObj.get() : "null");
         System.out.println("<==main");
     }
 }
