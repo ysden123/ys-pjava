@@ -30,6 +30,14 @@ class POptional {
         result.ifPresent(s -> System.out.printf("Result value is \"%s\"\n", s));
     }
 
+    private static void showFlatMapResult(Optional<Integer> lengthOpt) {
+        if (lengthOpt.isPresent()) {
+            System.out.printf("flatMap: length is %d\n", lengthOpt.get());
+        } else {
+            System.out.println("flatMap: length is undefined");
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("==>main");
         Optional<String> result;
@@ -48,19 +56,11 @@ class POptional {
         // Usage of flatMap
         result = POptional.f1(TO_SUCCESS);
         Optional<Integer> lengthOpt = result.flatMap(s -> Optional.of(s.length()));
-        if (lengthOpt.isPresent()) {
-            System.out.printf("flatMap: length is %d\n", lengthOpt.get());
-        } else {
-            System.out.println("flatMap: length is undefined");
-        }
+        showFlatMapResult(lengthOpt);
 
         result = POptional.f1(TO_FAIL);
         lengthOpt = result.flatMap(s -> Optional.of(s.length()));
-        if (lengthOpt.isPresent()) {
-            System.out.printf("flatMap: length is %d\n", lengthOpt.get());
-        } else {
-            System.out.println("flatMap: length is undefined");
-        }
+        showFlatMapResult(lengthOpt);
 
         // Usage of map
         result = POptional.f1(TO_SUCCESS);
