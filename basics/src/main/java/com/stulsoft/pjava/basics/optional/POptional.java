@@ -46,6 +46,7 @@ class POptional {
         System.out.printf("filter: textResult is %s\n", textResult);
 
         // Usage of flatMap
+        result = POptional.f1(TO_SUCCESS);
         Optional<Integer> lengthOpt = result.flatMap(s -> Optional.of(s.length()));
         if (lengthOpt.isPresent()) {
             System.out.printf("flatMap: length is %d\n", lengthOpt.get());
@@ -53,9 +54,23 @@ class POptional {
             System.out.println("flatMap: length is undefined");
         }
 
+        result = POptional.f1(TO_FAIL);
+        lengthOpt = result.flatMap(s -> Optional.of(s.length()));
+        if (lengthOpt.isPresent()) {
+            System.out.printf("flatMap: length is %d\n", lengthOpt.get());
+        } else {
+            System.out.println("flatMap: length is undefined");
+        }
+
         // Usage of map
+        result = POptional.f1(TO_SUCCESS);
         Optional<Integer> lengthObj = result.map(s -> s.length());
-        System.out.printf("lengthObj is %s\n", lengthObj.isPresent() ? lengthObj.get() : "null");
+        System.out.printf("map: lengthObj is %s\n", lengthObj.isPresent() ? lengthObj.get() : "null");
+
+        result = POptional.f1(TO_FAIL);
+        lengthObj = result.map(s -> s.length());
+        System.out.printf("map: lengthObj is %s\n", lengthObj.isPresent() ? lengthObj.get() : "null");
+
         System.out.println("<==main");
     }
 }
