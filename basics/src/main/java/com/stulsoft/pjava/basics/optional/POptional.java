@@ -5,6 +5,8 @@
 package com.stulsoft.pjava.basics.optional;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Playing with Optional
@@ -15,6 +17,12 @@ class POptional {
     private static final boolean TO_SUCCESS = false;
     private static final boolean TO_FAIL = true;
 
+    /**
+     * Some process that returns a string or empty
+     *
+     * @param toFail either to fail or success
+     * @return string or empty
+     */
     private static Optional<String> f1(final boolean toFail) {
         System.out.println("==>f1");
         System.out.println("<==f1");
@@ -25,42 +33,42 @@ class POptional {
         }
     }
 
-    private static void showResult(Optional<String> result, boolean toFail) {
-        System.out.printf("toFail is %s, result is %s\n", toFail, result);
-        result.ifPresent(s -> System.out.printf("Result value is \"%s\"\n", s));
-    }
-
-    private static void showFlatMapResult(Optional<Integer> lengthOpt) {
-        if (lengthOpt.isPresent()) {
-            System.out.printf("flatMap: length is %d\n", lengthOpt.get());
-        } else {
-            System.out.println("flatMap: length is undefined");
-        }
-    }
-
     public static void main(String[] args) {
         System.out.println("==>main");
         Optional<String> result;
 
+        BiConsumer<Optional<String>, Boolean> showResult = (r, b) -> {
+            System.out.printf("toFail is %s, result is %s\n", b, r);
+            r.ifPresent(s -> System.out.printf("Result value is \"%s\"\n", s));
+        };
+
+        Consumer<Optional<Integer>> showFlatMapResult = lengthOpt -> {
+            if (lengthOpt.isPresent()) {
+                System.out.printf("flatMap: length is %d\n", lengthOpt.get());
+            } else {
+                System.out.println("flatMap: length is undefined");
+            }
+        };
+
         result = POptional.f1(TO_SUCCESS);
-        showResult(result, TO_SUCCESS);
+        showResult.accept(result, TO_SUCCESS);
 
         result = POptional.f1(TO_FAIL);
-        showResult(result, TO_FAIL);
+        showResult.accept(result, TO_SUCCESS);
 
         // Usage of filter
         result = POptional.f1(TO_SUCCESS);
-        String textResult = result.filter(s -> s.contains("result")).isPresent() ? "Success" : "Filure";
+        String textResult = result.filter(s -> s.contains("result")).isPresent() ? "Success" : "Failure";
         System.out.printf("filter: textResult is %s\n", textResult);
 
         // Usage of flatMap
         result = POptional.f1(TO_SUCCESS);
         Optional<Integer> lengthOpt = result.flatMap(s -> Optional.of(s.length()));
-        showFlatMapResult(lengthOpt);
+        showFlatMapResult.accept(lengthOpt);
 
         result = POptional.f1(TO_FAIL);
         lengthOpt = result.flatMap(s -> Optional.of(s.length()));
-        showFlatMapResult(lengthOpt);
+        showFlatMapResult.accept(lengthOpt);
 
         // Usage of map
         result = POptional.f1(TO_SUCCESS);
