@@ -45,6 +45,8 @@ public class PMap {
         theList.add("s3b");
         System.out.println("(3.1) theList is: " + String.join(", ", theList));
 
+        System.out.println("(4) theMap has " + theMap.size() + " entries");
+
         System.out.println("<==computeIfAbsent");
     }
 
