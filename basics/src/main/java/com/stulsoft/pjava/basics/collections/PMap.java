@@ -50,9 +50,47 @@ public class PMap {
         System.out.println("<==computeIfAbsent");
     }
 
+    /**
+     * Usage Stream::map
+     */
+    private static void map() {
+        System.out.println("==>map");
+        Map<Integer, List<String>> theMap = buildMap();
+
+        theMap.values().stream().map(items -> String.join(", ", items)).forEach(System.out::println);
+
+        System.out.println("<==map");
+    }
+
+    /**
+     * Usage Stream::flatMap
+     */
+    private static void flatMap() {
+        System.out.println("==>flatMap");
+        Map<Integer, List<String>> theMap = buildMap();
+        theMap.values().stream()
+                .flatMap(items -> items.stream().map(item -> String.format("%s - %d", item, item.length())))
+                .forEach(System.out::println);
+        System.out.println("<==flatMap");
+    }
+
+    private static Map<Integer, List<String>> buildMap() {
+        Map<Integer, List<String>> theMap = new HashMap<>();
+        for (int i = 1; i <= 3; ++i) {
+            List<String> items = new ArrayList<>();
+            for (int j = 1; j <= 5; ++j) {
+                items.add(String.format("text %d%d", i, j));
+            }
+            theMap.put(i, items);
+        }
+        return theMap;
+    }
+
     public static void main(String[] args) {
         System.out.println("==>main");
         computeIfAbsent();
+        map();
+        flatMap();
         System.out.println("<==main");
 
     }
