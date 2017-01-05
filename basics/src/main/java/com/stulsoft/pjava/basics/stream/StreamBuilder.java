@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  *
  * @author Yuriy Stul
  */
-public class StreamBuilder {
+class StreamBuilder {
     /**
      * Usage accept
      */
