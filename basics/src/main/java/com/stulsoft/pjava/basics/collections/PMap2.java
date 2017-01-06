@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author Yuriy Stul
@@ -20,24 +22,19 @@ public class PMap2 {
     private static Logger logger = LoggerUtils.getLogger(PMap2.class.getName());
 
     private Collection<String> getCollection() {
-        List<String> l = new ArrayList<>();
-        for (int i = 1; i <= 3; ++i) {
-            l.add(String.format("text %02d", i));
-        }
-
-        return l;
+        Stream.Builder<String> b = Stream.builder();
+        IntStream.range(1, 4).forEach(i -> b.accept(String.format("text %02d", i)));
+        return b.build().collect(Collectors.toList());
     }
 
     private List<List<String>> getCollections() {
-        List<List<String>> l1 = new ArrayList<>();
-        for (int i = 1; i <= 3; ++i) {
-            List<String> l2 = new ArrayList<>();
-            for (int j = 1; j <= 3; ++j) {
-                l2.add(String.format("text %02d - %02d", i, j));
-            }
-            l1.add(l2);
-        }
-        return l1;
+        Stream.Builder<List<String>> b1 = Stream.builder();
+        IntStream.range(1, 4).forEach(i -> {
+            Stream.Builder<String> b2 = Stream.builder();
+            IntStream.range(1, 4).forEach(j -> b2.accept(String.format("text %02d - %02d", i, j)));
+            b1.accept(b2.build().collect(Collectors.toList()));
+        });
+        return b1.build().collect(Collectors.toList());
     }
 
     private List<HashMap<String, Integer>> getMaps() {
