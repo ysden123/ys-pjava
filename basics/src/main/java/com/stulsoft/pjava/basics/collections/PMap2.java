@@ -6,7 +6,6 @@ package com.stulsoft.pjava.basics.collections;
 
 import com.stulsoft.pjava.basics.LoggerUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -38,15 +37,13 @@ public class PMap2 {
     }
 
     private List<HashMap<String, Integer>> getMaps() {
-        List<HashMap<String, Integer>> l1 = new ArrayList<>();
-        for (int i = 1; i <= 3; ++i) {
+        Stream.Builder<HashMap<String, Integer>> b = Stream.builder();
+        IntStream.range(1, 4).forEach(i -> {
             HashMap<String, Integer> m = new HashMap<>();
-            for (int j = 1; j <= 3; ++j) {
-                m.put(String.format("text %02d - %02d", i, j), i + j);
-            }
-            l1.add(m);
-        }
-        return l1;
+            IntStream.range(1, 4).forEach(j -> m.put(String.format("text %02d - %02d", i, j), i + j));
+            b.accept(m);
+        });
+        return b.build().collect(Collectors.toList());
     }
 
     /**
