@@ -15,6 +15,10 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
+ * Playing with map.
+ * <p>
+ * Usage <i>map</i> and <i>flatMap</i>
+ *
  * @author Yuriy Stul
  */
 public class PMap2 {
@@ -47,7 +51,7 @@ public class PMap2 {
     }
 
     /**
-     * Using map - simple conversion from T1 (String) to T2 (Integer).
+     * Usage the <i>map</i> - simple conversion from T1 (String) to T2 (Integer).
      */
     private void testMap1() {
         logger.info(">>>");
@@ -57,7 +61,7 @@ public class PMap2 {
     }
 
     /**
-     * Using flatMap - conversion from list of lists to one list without changing type.
+     * Usage the <i>flatMap</i> - conversion from list of lists to one list without changing type.
      */
     private void testFlatMap1() {
         logger.info(">>>");
@@ -67,7 +71,7 @@ public class PMap2 {
     }
 
     /**
-     * Using flatMap - conversion from list of maps to list of values.
+     * Usage the <i>flatMap</i> - conversion from list of maps to list of values.
      */
     private void testFlatMap2() {
         logger.info(">>>");
