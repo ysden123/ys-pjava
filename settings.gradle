@@ -3,3 +3,5 @@ include 'concurrency'
 include 'function'
 include 'reflection'
 include 'basics'
+include 'conf'
+
