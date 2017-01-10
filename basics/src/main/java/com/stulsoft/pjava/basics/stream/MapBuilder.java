@@ -28,7 +28,7 @@ public class MapBuilder {
                 .mapToObj(key ->
                         new SimpleEntry<>(key,
                                 LongStream
-                                        .range(1, 1)
+                                        .range(1, 3)
                                         .mapToObj(i -> String.format("stream text %d%d", key, i))
                                         .collect(Collectors.toList()))
 
