@@ -7,6 +7,7 @@ package com.stulsoft.pjava.basics.stream;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -58,10 +59,30 @@ public class MapBuilder {
         System.out.println("<==buildMapOfLists2");
     }
 
+    /**
+     * Builds a map of lists from two ranges, using AtomicLong
+     */
+    private static void buildMapOfLists3() {
+        System.out.println("==>buildMapOfLists3");
+        Map<Long, List<AtomicLong>> map = LongStream
+                .range(1, 4)
+                .mapToObj(key ->
+                        new SimpleEntry<>(key,
+                                LongStream
+                                        .range(1, 3)
+                                        .mapToObj(AtomicLong::new)
+                                        .collect(Collectors.toList())
+                        )
+                ).collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue));
+        map.entrySet().forEach(e -> System.out.println(e.getKey() + " -> " + e.getValue()));
+        System.out.println("<==buildMapOfLists3");
+    }
+
     public static void main(String[] args) {
         System.out.println("==>main");
         buildMapOfLists1();
         buildMapOfLists2();
+        buildMapOfLists3();
         System.out.println("<==main");
     }
 }
