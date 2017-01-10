@@ -7,5 +7,5 @@ package com.stulsoft.pjava.basics.stream;
 /**
  * @author Yuriy Stul
  */
-public class TestM {
+public class TestM2 {
 }
