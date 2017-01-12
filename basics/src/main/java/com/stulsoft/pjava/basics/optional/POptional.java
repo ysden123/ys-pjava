@@ -72,11 +72,11 @@ class POptional {
 
         // Usage of map
         result = POptional.f1(TO_SUCCESS);
-        Optional<Integer> lengthObj = result.map(s -> s.length());
+        Optional<Integer> lengthObj = result.map(String::length);
         System.out.printf("map: lengthObj is %s\n", lengthObj.isPresent() ? lengthObj.get() : "null");
 
         result = POptional.f1(TO_FAIL);
-        lengthObj = result.map(s -> s.length());
+        lengthObj = result.map(String::length);
         System.out.printf("map: lengthObj is %s\n", lengthObj.isPresent() ? lengthObj.get() : "null");
 
         System.out.println("<==main");
