@@ -85,7 +85,6 @@ public class CollectExamples {
         System.out.println("<==toMap4");
     }
 
-    // todo toMap4 - mapSupplier
     public static void main(String[] args) {
         System.out.println("==>main");
         toMap2();
