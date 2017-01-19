@@ -5,6 +5,7 @@
 package com.stulsoft.pjava.basics.stream;
 
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -37,14 +38,25 @@ class BenchMark {
         System.out.println("<==getMaxWithFor");
     }
 
+    private static void getMaxWith_forEach() {
+        System.out.println("==>getMaxWith_forEach");
+        int[] max = {Integer.MIN_VALUE};
+        long start = System.nanoTime();
+        data.forEach(i -> max[0] = Integer.max(max[0], i));
+        long end = System.nanoTime();
+        System.out.printf("max = %d, dDuration: %d\n", max[0], TimeUnit.NANOSECONDS.toMillis(end - start));
+        System.out.println("<==getMaxWith_forEach");
+    }
+
     private static void getMaxWithStream_max() {
         System.out.println("==>getMaxWithStream_max");
         long start = System.nanoTime();
-        int max = data.stream().max((a, b) -> {
+        Optional<Integer> maxOpt = data.stream().max((a, b) -> {
             if (a < b) return -1;
             else if (a.equals(b)) return 0;
             else return 1;
-        }).get();
+        });
+        int max = maxOpt.isPresent() ? maxOpt.get() : -1;
         long end = System.nanoTime();
         System.out.printf("max = %d, Duration: %d\n", max, TimeUnit.NANOSECONDS.toMillis(end - start));
         System.out.println("<==getMaxWithStream_max");
@@ -73,9 +85,9 @@ class BenchMark {
 
     public static void main(String[] args) {
         System.out.println("==>main");
-//        generateData(1000000);
-        generateData(100);
+        generateData(100000);
         getMaxWithFor();
+        getMaxWith_forEach();
         getMaxWithStream_max();
         getMaxWithStream_reduce1();
         getMaxWithStream_reduce2();
