@@ -76,7 +76,25 @@ class BenchMark {
     }
 
     /**
-     * Stream: reduce with compare lambda expression
+     * Stream: max with comparator with parallel
+     *
+     * @param data collection
+     * @return [max, duration]
+     */
+    private static AbstractMap.SimpleEntry<Integer, Long> getMaxWithStreamParallel_max(List<Integer> data) {
+        long start = System.nanoTime();
+        Optional<Integer> maxOpt = data.stream().parallel().max((a, b) -> {
+            if (a < b) return -1;
+            else if (a.equals(b)) return 0;
+            else return 1;
+        });
+        int max = maxOpt.isPresent() ? maxOpt.get() : -1;
+        long end = System.nanoTime();
+        return new AbstractMap.SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
+    }
+
+    /**
+     * Stream: reduce with compare lambda expression with parallel
      *
      * @param data collection
      * @return [max, duration]
@@ -84,6 +102,21 @@ class BenchMark {
     private static AbstractMap.SimpleEntry<Integer, Long> getMaxWithStream_reduce1(List<Integer> data) {
         long start = System.nanoTime();
         int max = data.stream()
+                .reduce(Integer.MIN_VALUE, (a, b) -> a > b ? a : b);
+        long end = System.nanoTime();
+        return new AbstractMap.SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
+    }
+
+    /**
+     * Stream: reduce with compare lambda expression with parallel
+     *
+     * @param data collection
+     * @return [max, duration]
+     */
+    private static AbstractMap.SimpleEntry<Integer, Long> getMaxWithStreamParallel_reduce1(List<Integer> data) {
+        long start = System.nanoTime();
+        int max = data.stream()
+                .parallel()
                 .reduce(Integer.MIN_VALUE, (a, b) -> a > b ? a : b);
         long end = System.nanoTime();
         return new AbstractMap.SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
@@ -98,6 +131,21 @@ class BenchMark {
     private static AbstractMap.SimpleEntry<Integer, Long> getMaxWithStream_reduce2(List<Integer> data) {
         long start = System.nanoTime();
         int max = data.stream()
+                .reduce(Integer.MIN_VALUE, Integer::max);
+        long end = System.nanoTime();
+        return new AbstractMap.SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
+    }
+
+    /**
+     * Stream: reduce with reference om compare function (method) with parallel
+     *
+     * @param data collection
+     * @return [max, duration]
+     */
+    private static AbstractMap.SimpleEntry<Integer, Long> getMaxWithStreamParallel_reduce2(List<Integer> data) {
+        long start = System.nanoTime();
+        int max = data.stream()
+                .parallel()
                 .reduce(Integer.MIN_VALUE, Integer::max);
         long end = System.nanoTime();
         return new AbstractMap.SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
@@ -121,11 +169,20 @@ class BenchMark {
         result = getMaxWithStream_max(listData);
         System.out.printf("%s\tStream max\t%d\t%d\n", list, result.getKey(), result.getValue());
 
+        result = getMaxWithStreamParallel_max(listData);
+        System.out.printf("%s\tStream max with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
+
         result = getMaxWithStream_reduce1(listData);
         System.out.printf("%s\tStream reduce1\t%d\t%d\n", list, result.getKey(), result.getValue());
 
+        result = getMaxWithStreamParallel_reduce1(listData);
+        System.out.printf("%s\tStream reduce1 with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
+
         result = getMaxWithStream_reduce2(listData);
         System.out.printf("%s\tStream reduce2\t%d\t%d\n", list, result.getKey(), result.getValue());
+
+        result = getMaxWithStreamParallel_reduce2(listData);
+        System.out.printf("%s\tStream reduce2 with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
 
         list = "LinkedList";
         result = getMaxWithFor(linkedLististData);
@@ -137,11 +194,20 @@ class BenchMark {
         result = getMaxWithStream_max(linkedLististData);
         System.out.printf("%s\tStream max\t%d\t%d\n", list, result.getKey(), result.getValue());
 
+        result = getMaxWithStreamParallel_max(linkedLististData);
+        System.out.printf("%s\tStream max parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
+
         result = getMaxWithStream_reduce1(linkedLististData);
         System.out.printf("%s\tStream reduce1\t%d\t%d\n", list, result.getKey(), result.getValue());
 
+        result = getMaxWithStreamParallel_reduce1(linkedLististData);
+        System.out.printf("%s\tStream reduce1 with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
+
         result = getMaxWithStream_reduce2(linkedLististData);
         System.out.printf("%s\tStream reduce2\t%d\t%d\n", list, result.getKey(), result.getValue());
+
+        result = getMaxWithStreamParallel_reduce2(linkedLististData);
+        System.out.printf("%s\tStream reduce2 with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
 
         System.out.println("<==main");
     }
