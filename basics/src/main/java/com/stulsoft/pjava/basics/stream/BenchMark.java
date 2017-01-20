@@ -6,6 +6,7 @@ package com.stulsoft.pjava.basics.stream;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -20,8 +21,10 @@ class BenchMark {
     private static void generateListData(int n) {
         Random r = new Random();
         listData = new ArrayList<>();
-        IntStream.range(0,n)
-                .forEach(i->listData.add(r.nextInt()));
+        listData.addAll(IntStream.range(0, n)
+                .parallel()
+                .mapToObj(i -> r.nextInt())
+                .collect(Collectors.toList()));
     }
 
     private static void generateLinkedListData() {
