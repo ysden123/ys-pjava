@@ -6,6 +6,7 @@ package com.stulsoft.pjava.basics.stream;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 /**
  * Checking stream benchmark
@@ -14,17 +15,17 @@ import java.util.concurrent.TimeUnit;
  */
 class BenchMark {
     private static List<Integer> listData;
-    private static LinkedList<Integer> linkedLististData;
+    private static LinkedList<Integer> linkedListData;
 
-    private static void generateListData(long n) {
+    private static void generateListData(int n) {
         Random r = new Random();
         listData = new ArrayList<>();
-        for (long i = 1; i <= n; ++i)
-            listData.add(r.nextInt());
+        IntStream.range(0,n)
+                .forEach(i->listData.add(r.nextInt()));
     }
 
     private static void generateLinkedListData() {
-        linkedLististData = new LinkedList<>(listData);
+        linkedListData = new LinkedList<>(listData);
     }
 
     /**
@@ -185,28 +186,28 @@ class BenchMark {
         System.out.printf("%s\tStream reduce2 with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
 
         list = "LinkedList";
-        result = getMaxWithFor(linkedLististData);
+        result = getMaxWithFor(linkedListData);
         System.out.printf("%s\tfor\t%d\t%d\n", list, result.getKey(), result.getValue());
 
-        result = getMaxWith_forEach(linkedLististData);
+        result = getMaxWith_forEach(linkedListData);
         System.out.printf("%s\tforEach\t%d\t%d\n", list, result.getKey(), result.getValue());
 
-        result = getMaxWithStream_max(linkedLististData);
+        result = getMaxWithStream_max(linkedListData);
         System.out.printf("%s\tStream max\t%d\t%d\n", list, result.getKey(), result.getValue());
 
-        result = getMaxWithStreamParallel_max(linkedLististData);
+        result = getMaxWithStreamParallel_max(linkedListData);
         System.out.printf("%s\tStream max parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
 
-        result = getMaxWithStream_reduce1(linkedLististData);
+        result = getMaxWithStream_reduce1(linkedListData);
         System.out.printf("%s\tStream reduce1\t%d\t%d\n", list, result.getKey(), result.getValue());
 
-        result = getMaxWithStreamParallel_reduce1(linkedLististData);
+        result = getMaxWithStreamParallel_reduce1(linkedListData);
         System.out.printf("%s\tStream reduce1 with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
 
-        result = getMaxWithStream_reduce2(linkedLististData);
+        result = getMaxWithStream_reduce2(linkedListData);
         System.out.printf("%s\tStream reduce2\t%d\t%d\n", list, result.getKey(), result.getValue());
 
-        result = getMaxWithStreamParallel_reduce2(linkedLististData);
+        result = getMaxWithStreamParallel_reduce2(linkedListData);
         System.out.printf("%s\tStream reduce2 with parallel\t%d\t%d\n", list, result.getKey(), result.getValue());
 
         System.out.println("<==main");
