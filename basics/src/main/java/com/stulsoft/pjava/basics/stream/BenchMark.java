@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Checking stream benchmark
@@ -20,11 +21,10 @@ class BenchMark {
 
     private static void generateListData(int n) {
         Random r = new Random();
-        listData = new ArrayList<>();
-        listData.addAll(IntStream.range(0, n)
-                .parallel()
-                .mapToObj(i -> r.nextInt())
-                .collect(Collectors.toList()));
+        Stream.Builder<Integer> b = Stream.builder();
+        IntStream.range(0, n)
+                .forEach(i -> b.accept(r.nextInt()));
+        listData = b.build().collect(Collectors.toList());
     }
 
     private static void generateLinkedListData() {
