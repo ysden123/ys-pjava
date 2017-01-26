@@ -3,7 +3,6 @@
  */
 package com.stulsoft.pjava.function;
 
-import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
