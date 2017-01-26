@@ -79,6 +79,16 @@ class POptional {
         lengthObj = result.map(String::length);
         System.out.printf("map: lengthObj is %s\n", lengthObj.isPresent() ? lengthObj.get() : "null");
 
+        result = POptional.f1(TO_SUCCESS);
+        int lA[] = {-1};
+        result.ifPresent(s -> lA[0] = s.length());
+        System.out.printf("ifPresent: lA[0] is %d\n", lA[0]);
+
+        result = POptional.f1(TO_FAIL);
+        lA[0] = -1;
+        result.ifPresent(s -> lA[0] = s.length());
+        System.out.printf("ifPresent: lA[0] is %d\n", lA[0]);
+
         System.out.println("<==main");
     }
 }
