@@ -5,6 +5,7 @@ package com.stulsoft.pjava.function;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Usage of Predicate function.
@@ -15,8 +16,7 @@ public class PredicateExample {
 	public static void main(String[] args) {
 		System.out.println("==>main");
 		Predicate<String> p = x -> x.equals("abc");
-		Arrays.asList("cccc", "dddd", "abc")
-				.stream()
+		Stream.of("cccc", "dddd", "abc")
 				.filter(p)
 				.forEach(System.out::println);
 		System.out.println("<==main");
