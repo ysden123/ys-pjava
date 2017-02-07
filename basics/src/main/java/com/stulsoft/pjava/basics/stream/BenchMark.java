@@ -48,6 +48,23 @@ class BenchMark {
     }
 
     /**
+     * Classic Iterator
+     *
+     * @param data collection
+     * @return [max, duration]
+     */
+    private static AbstractMap.SimpleEntry<Integer, Long> getMaxWithIterator(List<Integer> data) {
+        int max = Integer.MIN_VALUE;
+        long start = System.nanoTime();
+        Iterator<Integer> iterator = data.iterator();
+        while (iterator.hasNext()) {
+            max = Integer.max(max, iterator.next());
+        }
+        long end = System.nanoTime();
+        return new AbstractMap.SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
+    }
+
+    /**
      * Simple "forEach" loop statement
      *
      * @param data collection
@@ -167,6 +184,9 @@ class BenchMark {
         result = getMaxWithFor(listData);
         System.out.printf("%s\tfor\t%d\t%d\n", list, result.getKey(), result.getValue());
 
+        result = getMaxWithIterator(listData);
+        System.out.printf("%s\titerator\t%d\t%d\n", list, result.getKey(), result.getValue());
+
         result = getMaxWith_forEach(listData);
         System.out.printf("%s\tforEach\t%d\t%d\n", list, result.getKey(), result.getValue());
 
@@ -191,6 +211,9 @@ class BenchMark {
         list = "LinkedList";
         result = getMaxWithFor(linkedListData);
         System.out.printf("%s\tfor\t%d\t%d\n", list, result.getKey(), result.getValue());
+
+        result = getMaxWithIterator(listData);
+        System.out.printf("%s\titerator\t%d\t%d\n", list, result.getKey(), result.getValue());
 
         result = getMaxWith_forEach(linkedListData);
         System.out.printf("%s\tforEach\t%d\t%d\n", list, result.getKey(), result.getValue());
