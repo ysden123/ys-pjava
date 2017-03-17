@@ -86,14 +86,18 @@ class BenchMark {
      */
     private static AbstractMap.SimpleEntry<Integer, Long> getMaxWithStream_max(List<Integer> data) {
         long start = System.nanoTime();
-        Optional<Integer> maxOpt = data.stream().max((a, b) -> {
-            if (a < b) return -1;
-            else if (a.equals(b)) return 0;
-            else return 1;
-        });
-        int max = maxOpt.isPresent() ? maxOpt.get() : -1;
+        Optional<Integer> maxOpt = data
+                .stream()
+                .max((a, b) -> {
+                    if (a < b) return -1;
+                    else if (a.equals(b)) return 0;
+                    else return 1;
+                });
+        int max = maxOpt
+                .isPresent() ? maxOpt.get() : -1;
         long end = System.nanoTime();
-        return new AbstractMap.SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
+        return new AbstractMap
+                .SimpleEntry<>(max, TimeUnit.NANOSECONDS.toMillis(end - start));
     }
 
     /**
