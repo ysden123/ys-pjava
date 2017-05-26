@@ -13,20 +13,7 @@ import java.util.concurrent.TimeoutException;
  * @author Yuriy Stul
  */
 public class Listener1 {
-    class Status {
-        String status;
-
-        String getStatus() {
-            return status;
-        }
-
-        void setStatus(String status) {
-            this.status = status;
-        }
-    }
-
     private static Logger logger = LoggerFactory.getLogger(Listener1.class);
-    //    private final Object syncObject = new Object();
     private final Status status = new Status();
 
     /**
@@ -38,7 +25,7 @@ public class Listener1 {
      * @param timeout max time to wait in milliseconds
      * @throws TimeoutException status was not set to Completed
      */
-    private void work(long timeout) throws TimeoutException {
+    void work(long timeout) throws TimeoutException {
         try {
             logger.info("Waiting {} milliseconds...", timeout);
             status.setStatus("Running");
@@ -57,7 +44,7 @@ public class Listener1 {
     /**
      * Sets the status to 'Completed' and notifies the status object.
      */
-    private void receiveMessage() {
+    void receiveMessage() {
         logger.info("notify()");
         synchronized (status) {
             status.setStatus("Completed");
