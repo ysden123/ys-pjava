@@ -19,11 +19,11 @@ public class ErrHandling3 {
     public static void main(String[] args) {
         logger.info("==>main");
         ErrHandling3 eh = new ErrHandling3();
-//        eh.test1(THROW_EXCEPTION);
-//
-//        logger.info("\n");
-//        eh.test1(DO_NOT_THROW_EXCEPTION);
-//        logger.info("<==main");
+        eh.test1(THROW_EXCEPTION);
+
+        logger.info("\n");
+        eh.test1(DO_NOT_THROW_EXCEPTION);
+        logger.info("<==main");
 
         logger.info("\n");
         eh.test2(DO_NOT_THROW_EXCEPTION, DO_NOT_THROW_EXCEPTION);
