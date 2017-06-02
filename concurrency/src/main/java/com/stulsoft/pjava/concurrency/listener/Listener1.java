@@ -14,46 +14,11 @@ import java.util.concurrent.TimeoutException;
  */
 public class Listener1 {
     private static Logger logger = LoggerFactory.getLogger(Listener1.class);
-    private final Status status = new Status();
+    private final Object syncObject = new Object();
+    private volatile Status status = new Status();
 
-    /**
-     * Does a work
-     *
-     * Waits no more than 'timeout' milliseconds and checks status.
-     * If status is "Completed" then everything is OK; otherwise throws TimeoutException.
-     *
-     * @param timeout max time to wait in milliseconds
-     * @throws TimeoutException status was not set to Completed
-     */
-    void work(long timeout) throws TimeoutException {
-        try {
-            logger.info("Waiting {} milliseconds...", timeout);
-            status.setStatus("Running");
-            synchronized (status) {
-                status.wait(timeout);
-                if ("Running".equals(status.getStatus()))
-                    throw new TimeoutException("Not completed yet...");
-            }
-            logger.info("Completed");
-        } catch (InterruptedException e) {
-            logger.error("Interrupted!");
-            throw new TimeoutException("Was interrupted");
-        }
-    }
-
-    /**
-     * Sets the status to 'Completed' and notifies the status object.
-     */
-    void receiveMessage() {
-        logger.info("notify()");
-        synchronized (status) {
-            status.setStatus("Completed");
-            status.notify();
-        }
-    }
-
-    private static void test(long timeout, long delay){
-        logger.info("==>test. timeout={}, delay={}",timeout,delay);
+    private static void test(long timeout, long delay) {
+        logger.info("==>test. timeout={}, delay={}", timeout, delay);
         Listener1 listener = new Listener1();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
@@ -76,9 +41,45 @@ public class Listener1 {
 
     public static void main(String[] args) {
         logger.info("==>main");
-        test(1000,100);
+        test(1000, 100);
         logger.info("\n");
-        test(300,700);
+        test(300, 700);
         logger.info("<==main");
+    }
+
+    /**
+     * Does a work
+     *
+     * Waits no more than 'timeout' milliseconds and checks status.
+     * If status is "Completed" then everything is OK; otherwise throws TimeoutException.
+     *
+     * @param timeout max time to wait in milliseconds
+     * @throws TimeoutException status was not set to Completed
+     */
+    void work(long timeout) throws TimeoutException {
+        try {
+            logger.info("Waiting {} milliseconds...", timeout);
+            status.setStatus("Running");
+            synchronized (syncObject) {
+                syncObject.wait(timeout);
+                if ("Running".equals(status.getStatus()))
+                    throw new TimeoutException("Not completed yet...");
+            }
+            logger.info("Completed");
+        } catch (InterruptedException e) {
+            logger.error("Interrupted!");
+            throw new TimeoutException("Was interrupted");
+        }
+    }
+
+    /**
+     * Sets the status to 'Completed' and notifies the status object.
+     */
+    void receiveMessage() {
+        logger.info("notify()");
+        synchronized (syncObject) {
+            status.setStatus("Completed");
+            syncObject.notify();
+        }
     }
 }
