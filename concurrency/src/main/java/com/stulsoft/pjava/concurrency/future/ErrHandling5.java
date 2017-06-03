@@ -8,23 +8,17 @@ import java.util.concurrent.CompletableFuture;
 /**
  * @author Yuriy Stul
  */
-public class ErrHandling4 {
-    private static Logger logger = LoggerFactory.getLogger(ErrHandling4.class);
+public class ErrHandling5 {
+    private static Logger logger = LoggerFactory.getLogger(ErrHandling5.class);
 
     public static void main(String[] args) {
         logger.info("==>main");
-        ErrHandling4 eh = new ErrHandling4();
+        ErrHandling5 eh = new ErrHandling5();
         logger.info("\n");
         eh.test1();
 
         logger.info("\n");
         eh.test2();
-
-        logger.info("\n");
-        eh.test3();
-
-        logger.info("\n");
-        eh.test4();
 
         logger.info("\n");
         logger.info("<==main");
@@ -48,50 +42,18 @@ public class ErrHandling4 {
 
     private void test2() {
         logger.info("==>test2");
-        CompletableFuture.supplyAsync(this::failWithException)
+        CompletableFuture.supplyAsync(this::success)
                 .exceptionally(e -> {
                     logger.error(e.getMessage());
                     return null;
                 })
                 .thenApply(r -> {
                     logger.info("In thenApply. r is " + r);
-                    if (r != null)
-                        logger.info("r.isCompletedExceptionally() is {}", r.isCompletedExceptionally());
+                    logger.info("r.isCompletedExceptionally() is {}", r.isCompletedExceptionally());
                     return null;
                 });
         sleep(1000);
         logger.info("<==test2");
-    }
-
-    private void test3() {
-        logger.info("==>test3");
-        CompletableFuture.supplyAsync(this::failWithCompleteExceptionally)
-                .exceptionally(e -> {
-                    logger.error(e.getMessage());
-                    return null;
-                })
-                .thenAccept(r -> {
-                    logger.info("In thenAccept. r is " + r);
-                    logger.info("r.isCompletedExceptionally() is {}", r.isCompletedExceptionally());
-                });
-        sleep(1000);
-        logger.info("<==test3");
-    }
-
-    private void test4() {
-        logger.info("==>test4");
-        CompletableFuture.supplyAsync(this::failWithException)
-                .exceptionally(e -> {
-                    logger.error(e.getMessage());
-                    return null;
-                })
-                .thenAccept(r -> {
-                    logger.info("In thenAccept. r is " + r);
-                    if (r != null)
-                        logger.info("r.isCompletedExceptionally() is {}", r.isCompletedExceptionally());
-                });
-        sleep(1000);
-        logger.info("<==test4");
     }
 
     private CompletableFuture<Void> failWithCompleteExceptionally() {
@@ -104,11 +66,14 @@ public class ErrHandling4 {
         return future;
     }
 
-    private CompletableFuture<Void> failWithException() {
-        logger.info("==>failWithException");
+    private CompletableFuture<Void> success() {
+        logger.info("==>success");
+        final CompletableFuture<Void> future = new CompletableFuture<>();
         sleep(200);
-        logger.info("Complete exceptionally");
-        throw new RuntimeException("test ex 2");
+        logger.info("Complete successfully");
+        future.complete(null);
+        logger.info("<==success");
+        return future;
     }
 
     private void sleep(long delay) {
