@@ -30,19 +30,20 @@ public class Permutation {
         } else {
             List<List<T>> result = new ArrayList<>();
             for (int i = 0; i < src.size(); ++i) {
-                List<T> before = src.subList(0, i+1);
-                List<T> rest = src.subList(i+1, src.size()-1);
-                T element = rest.get(0);
-                before.addAll(rest.subList(1,rest.size()-1));
+                Tuple2<List<T>> beforeAndRest = CollectionSplitter.splitAt(src, i);
+                List<T> before = beforeAndRest.getLeft();
+                List<T> rest = beforeAndRest.getRight();
+                Tuple2<List<T>> elementAndRest = CollectionSplitter.splitAt(rest, 1);
+                T element = elementAndRest.getLeft().get(0);
+                before.addAll(elementAndRest.getRight());
                 List<List<T>> subPermutations = buildPermutations(before);
-                List<List<T>> list = subPermutations.stream().map(s->{
+                List<List<T>> list = subPermutations.stream().map(s -> {
                     List<T> l = new ArrayList<>();
                     l.add(element);
                     l.addAll(s);
                     return l;
                 }).collect(Collectors.toList());
-                System.out.println(list);
-                list.forEach(l->result.add(l));
+                result.addAll(list);
             }
             return result;
         }
