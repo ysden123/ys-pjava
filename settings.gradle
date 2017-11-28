@@ -1,7 +1,8 @@
 rootProject.name = 'ys-pjava'
+include 'basics'
 include 'concurrency'
+include 'conf'
+include 'exercises'
 include 'function'
 include 'reflection'
-include 'basics'
-include 'conf'
 
