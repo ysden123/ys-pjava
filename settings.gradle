@@ -5,4 +5,5 @@ include 'conf'
 include 'exercises'
 include 'function'
 include 'reflection'
+include 'utils'
 
