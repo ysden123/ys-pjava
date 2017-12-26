@@ -6,7 +6,7 @@ package com.stulsoft.pjava.basics.stream;
 /**
  * @author Yuriy Stul.
  */
-public class Result{
+public class Result {
     private final long duration;
     private final String text;
     private final Object value;
@@ -33,8 +33,8 @@ public class Result{
     public String toString() {
         return "Result{" +
                 "text='" + text +
-                "value='" + value.toString() +
-                ", duration=" + duration + "\n" +
+                "', value=" + value.toString() +
+                ", duration=" + duration +
                 "}";
     }
 }

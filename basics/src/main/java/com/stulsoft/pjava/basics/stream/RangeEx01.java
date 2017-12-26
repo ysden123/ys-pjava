@@ -11,6 +11,13 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
+ * Playing with reduce for range (stream).
+ * <p>
+ * Using without parallel and with parallel.
+ * <p>
+ * Conclusion: if we want to use reduce with parallel the function in reduce should be associative.
+ * For instance {@code (v1,v2)->v1 + v2} is good function (associative) and {@code (v1,v2)->v1 - v2} is bad function (non-associative)
+ *
  * @author Yuriy Stul.
  */
 public class RangeEx01 {
@@ -38,7 +45,6 @@ public class RangeEx01 {
     private static Result test2() {
         System.out.println("==>test2");
         int result = 0;
-        System.out.println("With parallel");
         long start = System.nanoTime();
         OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce((v1, v2) -> v1 - v2);
         if (resultOptional.isPresent()) {
@@ -55,7 +61,6 @@ public class RangeEx01 {
     private static Result test3() {
         System.out.println("==>test3");
         int result = 0;
-        System.out.println("With parallel");
         long start = System.nanoTime();
         OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce((v1, v2) -> {
 //            System.out.format("v1=%d, v2=%d\n",v1,v2);
@@ -107,6 +112,22 @@ public class RangeEx01 {
         return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "Without parallel and sum instead reduce", result);
     }
 
+    /**
+     * With parallel and minus sum
+     */
+    private static Result test7() {
+        System.out.println("==>test7");
+        int result = 0;
+        long start = System.nanoTime();
+        OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce((v1, v2) -> v1 + v2);
+        if (resultOptional.isPresent()) {
+            result = -resultOptional.getAsInt();
+        }
+        long end = System.nanoTime();
+        System.out.println("<==test7");
+        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "With parallel and minus sum", result);
+    }
+
     public static void main(String[] args) {
         System.out.println("==>main");
 
@@ -115,7 +136,8 @@ public class RangeEx01 {
                 test3(),
                 test4(),
                 test5(),
-                test6())
+                test6(),
+                test7())
                 .sorted(Comparator.comparingLong(Result::getDuration))
                 .collect(Collectors.toList());
 
