@@ -3,12 +3,15 @@
  */
 package com.stulsoft.pjava.basics.stream;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import com.stulsoft.pjava.utils.BenchmarkMaster;
+import com.stulsoft.pjava.utils.BenchmarkResult;
+
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.OptionalInt;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Playing with reduce for range (stream).
@@ -26,120 +29,75 @@ public class RangeEx01 {
     /**
      * Without parallel
      */
-    private static Result test1() {
-        System.out.println("==>test1");
+    private static AbstractMap.SimpleEntry<String, Integer> test1() {
         int result = 0;
-        long start = System.nanoTime();
         OptionalInt resultOptional = IntStream.range(0, N).reduce((v1, v2) -> v1 - v2);
         if (resultOptional.isPresent()) {
             result = resultOptional.getAsInt();
         }
-        long end = System.nanoTime();
-        System.out.println("<==test1");
-        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "Without parallel", result);
+        return new AbstractMap.SimpleEntry<>("Without parallel", result);
     }
 
     /**
      * With parallel
      */
-    private static Result test2() {
-        System.out.println("==>test2");
+    private static AbstractMap.SimpleEntry<String, Integer> test2() {
         int result = 0;
-        long start = System.nanoTime();
         OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce((v1, v2) -> v1 - v2);
         if (resultOptional.isPresent()) {
             result = resultOptional.getAsInt();
         }
-        long end = System.nanoTime();
-        System.out.println("<==test2");
-        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "With parallel", result);
-    }
-
-    /**
-     * With parallel
-     */
-    private static Result test3() {
-        System.out.println("==>test3");
-        int result = 0;
-        long start = System.nanoTime();
-        OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce((v1, v2) -> {
-//            System.out.format("v1=%d, v2=%d\n",v1,v2);
-            return v1 - v2;
-        });
-        if (resultOptional.isPresent()) {
-            result = resultOptional.getAsInt();
-        }
-        long end = System.nanoTime();
-        System.out.println("<==test3");
-        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "With parallel", result);
+        return new AbstractMap.SimpleEntry<>("With parallel", result);
     }
 
     /**
      * With parallel and sum instead reduce
      */
-    private static Result test4() {
-        System.out.println("==>test4");
-        long start = System.nanoTime();
+    private static AbstractMap.SimpleEntry<String, Integer> test3() {
         int result = -IntStream.range(0, N).parallel().sum();
-        long end = System.nanoTime();
-        System.out.println("<==test4");
-        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "With parallel and sum instead reduce", result);
+        return new AbstractMap.SimpleEntry<>("With parallel and sum instead reduce", result);
     }
 
     /**
      * With parallel and AtomicInteger
      */
-    private static Result test5() {
-        System.out.println("==>test5");
-        long start = System.nanoTime();
+    private static AbstractMap.SimpleEntry<String, Integer> test4() {
         final AtomicInteger counter = new AtomicInteger();
         IntStream.range(0, N).parallel()
                 .forEach(i -> counter.addAndGet(-i));
-        long end = System.nanoTime();
-        System.out.println("<==test5");
-        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "With parallel and AtomicInteger", counter.intValue());
+        return new AbstractMap.SimpleEntry<>("With parallel and AtomicInteger", counter.intValue());
     }
 
     /**
      * Without parallel and sum instead reduce
      */
-    private static Result test6() {
-        System.out.println("==>test6");
-        long start = System.nanoTime();
+    private static AbstractMap.SimpleEntry<String, Integer> test5() {
         int result = -IntStream.range(0, N).sum();
-        long end = System.nanoTime();
-        System.out.println("<==test6");
-        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "Without parallel and sum instead reduce", result);
+        return new AbstractMap.SimpleEntry<>("Without parallel and sum instead reduce", result);
     }
 
     /**
      * With parallel and minus sum
      */
-    private static Result test7() {
-        System.out.println("==>test7");
+    private static AbstractMap.SimpleEntry<String, Integer> test6() {
         int result = 0;
-        long start = System.nanoTime();
         OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce((v1, v2) -> v1 + v2);
         if (resultOptional.isPresent()) {
             result = -resultOptional.getAsInt();
         }
-        long end = System.nanoTime();
-        System.out.println("<==test7");
-        return new Result(TimeUnit.NANOSECONDS.toMillis((end - start)), "With parallel and minus sum", result);
+        return new AbstractMap.SimpleEntry<>("With parallel and minus sum", result);
     }
 
     public static void main(String[] args) {
         System.out.println("==>main");
-
-        List<Result> results = Stream.of(test1(),
-                test2(),
-                test3(),
-                test4(),
-                test5(),
-                test6(),
-                test7())
-                .sorted(Comparator.comparingLong(Result::getDuration))
-                .collect(Collectors.toList());
+        Collection<BenchmarkResult> results =
+                BenchmarkMaster.sortBenchmarkResultsByDurationAscending(BenchmarkMaster.execute(Arrays.asList(
+                        RangeEx01::test1,
+                        RangeEx01::test2,
+                        RangeEx01::test3,
+                        RangeEx01::test4,
+                        RangeEx01::test5,
+                        RangeEx01::test6)));
 
         System.out.println("\nCorrect results:");
         System.out.println("===============");
