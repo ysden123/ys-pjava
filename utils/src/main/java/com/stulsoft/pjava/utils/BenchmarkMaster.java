@@ -23,15 +23,24 @@ public final class BenchmarkMaster {
      *
      * @param samples specifies collection of a functions to execute; the function returns
      *                {@code SimpleEntry<String,Object>} where key is a text description and value is a result
+     * @param repeat  specifies how times to execute a sample
      * @return collection of benchmarks
      */
-    public static Collection<BenchmarkResult> execute(Collection<Supplier<AbstractMap.SimpleEntry<String, ?>>> samples) {
+    public static Collection<BenchmarkResult> execute(Collection<Supplier<AbstractMap.SimpleEntry<String, ?>>> samples, int repeat) {
         if (samples == null) throw new IllegalArgumentException("samples could not be null");
         return samples.stream().map(sample -> {
-            long start = System.nanoTime();
-            AbstractMap.SimpleEntry<String, ?> sampleResult = sample.get();
-            long end = System.nanoTime();
-            return new BenchmarkResult(TimeUnit.NANOSECONDS.toMillis(end - start), sampleResult.getKey(), sampleResult.getValue());
+            long totalDuration = 0;
+            String text = null;
+            Object value = null;
+            for (int i = 0; i < repeat; ++i) {
+                long start = System.nanoTime();
+                AbstractMap.SimpleEntry<String, ?> sampleResult = sample.get();
+                long end = System.nanoTime();
+                totalDuration += (TimeUnit.NANOSECONDS.toMillis(end - start));
+                text = sampleResult.getKey();
+                value = sampleResult.getValue();
+            }
+            return new BenchmarkResult(totalDuration / repeat, text, value);
         }).collect(Collectors.toList());
     }
 

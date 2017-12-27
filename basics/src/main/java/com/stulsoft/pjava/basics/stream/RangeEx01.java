@@ -97,7 +97,7 @@ public class RangeEx01 {
                         RangeEx01::test3,
                         RangeEx01::test4,
                         RangeEx01::test5,
-                        RangeEx01::test6)));
+                        RangeEx01::test6), 50));
 
         System.out.println("\nCorrect results:");
         System.out.println("===============");

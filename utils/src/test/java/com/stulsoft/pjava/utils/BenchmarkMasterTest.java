@@ -43,7 +43,7 @@ public class BenchmarkMasterTest {
 
     @Test
     public void execute() {
-        Collection<BenchmarkResult> results = BenchmarkMaster.execute(Arrays.asList(this::test1, this::test1));
+        Collection<BenchmarkResult> results = BenchmarkMaster.execute(Arrays.asList(this::test1, this::test1), 10);
         assertNotNull(results);
         assertTrue(results.size() > 0);
 
@@ -58,7 +58,7 @@ public class BenchmarkMasterTest {
     @Test
     public void sortBenchmarkResultsByDurationAscending() {
         Collection<BenchmarkResult> results = BenchmarkMaster.sortBenchmarkResultsByDurationAscending(
-                BenchmarkMaster.execute(Arrays.asList(this::test1, this::test2, this::test3)));
+                BenchmarkMaster.execute(Arrays.asList(this::test1, this::test2, this::test3), 10));
         assertNotNull(results);
         assertEquals(3, results.size());
 
@@ -70,7 +70,7 @@ public class BenchmarkMasterTest {
     @Test
     public void sortBenchmarkResultsByDurationDescending() {
         Collection<BenchmarkResult> results = BenchmarkMaster.sortBenchmarkResultsByDurationDescending(
-                BenchmarkMaster.execute(Arrays.asList(this::test1, this::test2, this::test3)));
+                BenchmarkMaster.execute(Arrays.asList(this::test1, this::test2, this::test3), 10));
         assertNotNull(results);
         assertEquals(3, results.size());
 
