@@ -4,6 +4,7 @@ include 'concurrency'
 include 'conf'
 include 'exercises'
 include 'function'
+include 'java10'
 include 'reflection'
 include 'utils'
 
