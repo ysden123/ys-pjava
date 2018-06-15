@@ -19,3 +19,5 @@ build
 api/
 out/
 *.iml
+*.ipr
+*.iws
