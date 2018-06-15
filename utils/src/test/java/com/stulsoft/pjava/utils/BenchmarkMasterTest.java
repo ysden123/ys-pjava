@@ -51,7 +51,7 @@ public class BenchmarkMasterTest {
             assertEquals("test 1", r.getText());
             assertEquals(123, r.getValue());
             long durationDif = Math.abs(r.getDuration() - 100);
-            assertTrue(durationDif <= 5);   // Diff is no more than 5%
+            assertTrue(durationDif <= 8);   // Diff is no more than 8%
         });
     }
 
