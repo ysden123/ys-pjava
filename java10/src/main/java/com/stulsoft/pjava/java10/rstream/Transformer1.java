@@ -2,7 +2,7 @@
  * Copyright (c) 2018. Yuriy Stul
  */
 
-package com.stulsoft.pjava.java10.reactive_stream;
+package com.stulsoft.pjava.java10.rstream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
