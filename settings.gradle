@@ -5,6 +5,7 @@ include 'conf'
 include 'exercises'
 include 'function'
 include 'java10'
+include 'java11'
 include 'reflection'
 include 'utils'
 
