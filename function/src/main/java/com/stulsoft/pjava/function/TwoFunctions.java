@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, Yuriy Stul. All rights reserved
+ * Copyright (c) 2020. Yuriy Stul
  */
 package com.stulsoft.pjava.function;
 

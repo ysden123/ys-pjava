@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017. Yuriy Stul
+ * Copyright (c) 2020. Yuriy Stul
  */
 
 package com.stulsoft.pjava.basics.loop;

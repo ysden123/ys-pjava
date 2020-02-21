@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2020. Yuriy Stul
+ */
+
+/*
    Created by Yuriy Stul 2018
 */
 package com.stulsoft.pjava.basics.enums;

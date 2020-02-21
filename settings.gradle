@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Yuriy Stul
+ */
+
 rootProject.name = 'ys-pjava'
 include 'basics'
 include 'concurrency'
