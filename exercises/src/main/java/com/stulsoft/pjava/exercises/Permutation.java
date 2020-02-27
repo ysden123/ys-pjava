@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Yuriy Stul
+ */
+
 package com.stulsoft.pjava.exercises;
 
 import java.util.ArrayList;

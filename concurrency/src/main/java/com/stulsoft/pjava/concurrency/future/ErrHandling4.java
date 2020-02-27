@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2020. Yuriy Stul
+ */
+
 package com.stulsoft.pjava.concurrency.future;
 
 import org.slf4j.Logger;

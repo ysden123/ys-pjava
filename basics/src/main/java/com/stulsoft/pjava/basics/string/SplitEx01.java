@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, William Hill Online. All rights reserved
+ * Copyright (c) 2020. Yuriy Stul
  */
 package com.stulsoft.pjava.basics.string;
 
