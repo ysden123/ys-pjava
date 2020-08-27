@@ -10,6 +10,7 @@ include 'exercises'
 include 'function'
 include 'java10'
 include 'java11'
+include 'java14'
 include 'reflection'
 include 'utils'
 
