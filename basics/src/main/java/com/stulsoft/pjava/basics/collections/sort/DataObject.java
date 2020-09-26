@@ -2,7 +2,7 @@
  * Copyright (c) 2020. Yuriy Stul
  */
 
-package com.stulsoft.pjava.basics.collections.groupby;
+package com.stulsoft.pjava.basics.collections.sort;
 
 import java.util.Objects;
 
