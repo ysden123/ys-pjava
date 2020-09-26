@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 class User {
-    private String casino;
-    private String username;
+    private final String casino;
+    private final String username;
 
     User(String casino, String username) {
         this.casino = casino;
