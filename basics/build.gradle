@@ -3,5 +3,5 @@
  */
 
 dependencies{
-    compile project(':utils')
+    implementation project(':utils')
 }

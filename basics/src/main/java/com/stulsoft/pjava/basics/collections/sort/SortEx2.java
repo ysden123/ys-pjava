@@ -26,7 +26,7 @@ public class SortEx2 {
 
     private static void ex1() {
         logger.info("==>ex1");
-        var objects = new Object[]{new Integer(1), new Integer(33), new Integer(2)};
+        var objects = new Object[]{1, 33, 2};
 
         var list = Arrays.asList(objects);
 
@@ -48,7 +48,7 @@ public class SortEx2 {
 
     private static void ex2() {
         logger.info("==>ex2");
-        var objects = new Object[]{new Integer(1), new Integer(33), 2};
+        var objects = new Object[]{1, 33, 2};
 
         var list = Arrays.asList(objects);
 
@@ -70,7 +70,7 @@ public class SortEx2 {
 
     private static void ex3() {
         logger.info("==>ex3");
-        var objects = new Object[]{new Integer(1), new Integer(33), new Boolean(true)};
+        var objects = new Object[]{1, 33, Boolean.TRUE};
 
         var list = Arrays.asList(objects);
 
