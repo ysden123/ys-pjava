@@ -19,8 +19,7 @@ import java.util.regex.Pattern;
 public class MongodbConnectionStringParser {
     private static final Logger logger = LoggerFactory.getLogger(MongodbConnectionStringParser.class);
 
-    private static final Pattern credentialsPattern = Pattern.compile("^mongodb://(.*)@.*");
-    private static final Pattern hostsPattern = Pattern.compile("^mongodb://.*@(.*)");
+    private static final Pattern connectionStringPattern = Pattern.compile("^mongodb://(.*)@(.*)");
 
     public static void main(String[] args) {
         logger.info("==>main");
@@ -127,46 +126,20 @@ public class MongodbConnectionStringParser {
 
         public static MongoConnection create(final String connectionString) throws IllegalArgumentException {
             try {
-                var mongoCredentials = extractCredentials(connectionString);
-                var mongoServers = extractServerAddresses(connectionString);
-                return new MongoConnection(mongoCredentials, mongoServers);
-            } catch (Exception exception) {
-                logger.error(exception.getMessage());
-                throw new IllegalArgumentException(exception.getMessage());
-            }
-        }
-
-        private static MongoCredentials extractCredentials(final String connectionString) throws IllegalArgumentException {
-            var matcher = credentialsPattern.matcher(connectionString);
-            try {
+                var matcher = connectionStringPattern.matcher(connectionString);
                 if (matcher.find()) {
-                    if (matcher.groupCount() > 0) {
+                    if (matcher.groupCount() == 2) {
+                        MongoCredentials mongoCredentials;
                         var usernameAndPass = matcher.group(1).split(":");
                         if (usernameAndPass.length != 2) {
                             var errMsg = "Wrong format: invalid credentials";
                             throw new IllegalArgumentException(errMsg);
                         } else {
-                            return new MongoCredentials(usernameAndPass[0], usernameAndPass[1]);
+                            mongoCredentials = new MongoCredentials(usernameAndPass[0], usernameAndPass[1]);
                         }
-                    } else {
-                        throw new IllegalArgumentException("Wrong format: invalid credentials");
-                    }
-                } else {
-                    throw new IllegalArgumentException("Wrong format: invalid credentials");
-                }
-            } catch (Exception exception) {
-                logger.error(exception.getMessage(), exception);
-                throw new IllegalArgumentException(exception.getMessage());
-            }
-        }
 
-        private static List<MongoServerAddress> extractServerAddresses(final String connectionString) throws IllegalArgumentException {
-            var matcher = hostsPattern.matcher(connectionString);
-            try {
-                if (matcher.find()) {
-                    if (matcher.groupCount() > 0) {
                         var serverAddresses = new ArrayList<MongoServerAddress>();
-                        var hostsAndPorts = matcher.group(1).split(",");
+                        var hostsAndPorts = matcher.group(2).split(",");
                         for (var hostAndPortItem : hostsAndPorts) {
                             var hostAndPort = hostAndPortItem.split(":");
                             if (hostAndPort.length == 2) {
@@ -175,15 +148,15 @@ public class MongodbConnectionStringParser {
                                 throw new IllegalArgumentException("Wrong format: invalid hosts");
                             }
                         }
-                        return serverAddresses;
+                        return new MongoConnection(mongoCredentials, serverAddresses);
                     } else {
-                        throw new IllegalArgumentException("Wrong format: invalid hosts");
+                        throw new IllegalArgumentException("Wrong format");
                     }
                 } else {
-                    throw new IllegalArgumentException("Wrong format: invalid hosts");
+                    throw new IllegalArgumentException("Wrong format");
                 }
             } catch (Exception exception) {
-                logger.error(exception.getMessage(), exception);
+                logger.error(exception.getMessage());
                 throw new IllegalArgumentException(exception.getMessage());
             }
         }
