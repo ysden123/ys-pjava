@@ -8,10 +8,10 @@ version '1.0-SNAPSHOT'
 subprojects {
     apply plugin: 'java'
 
-    tasks.withType(JavaCompile) {
+    /*tasks.withType(JavaCompile) {
         sourceCompatibility = '14'
         targetCompatibility = '14'
-    }
+    }*/
 
     repositories {
         mavenCentral()
