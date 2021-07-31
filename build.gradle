@@ -2,16 +2,16 @@
  * Copyright (c) 2020. Yuriy Stul
  */
 
-group 'com.stulsoft.ys_pjava'
+group 'com.stulsoft.ys-pjava'
 version '1.0-SNAPSHOT'
 
 subprojects {
     apply plugin: 'java'
 
-    /*tasks.withType(JavaCompile) {
-        sourceCompatibility = '14'
-        targetCompatibility = '14'
-    }*/
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = '11'
+        targetCompatibility = '11'
+    }
 
     repositories {
         mavenCentral()

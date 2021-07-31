@@ -2,7 +2,7 @@
  * Copyright (c) 2020. Yuriy Stul
  */
 
-package com.stulsoft.pjava.java11.collection;
+package com.stulsoft.pjava.basics.collections;
 
 import java.util.Arrays;
 

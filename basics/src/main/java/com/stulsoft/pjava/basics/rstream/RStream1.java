@@ -2,7 +2,7 @@
  * Copyright (c) 2020. Yuriy Stul
  */
 
-package com.stulsoft.pjava.java10.rstream;
+package com.stulsoft.pjava.basics.rstream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,7 +2,7 @@
  * Copyright (c) 2020. Yuriy Stul
  */
 
-package com.stulsoft.pjava.java10.rstream;
+package com.stulsoft.pjava.basics.rstream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,11 +86,11 @@ public class Transformer1 {
 
     public static void main(String[] args) throws InterruptedException {
         logger.info("==>main");
-        Transformer1.MySubscriber subscriber = new Transformer1.MySubscriber();
+        MySubscriber subscriber = new MySubscriber();
 
         SubmissionPublisher<String> publisher = new SubmissionPublisher<>() {
         };
-        Transformer1.MyProcessor processor = new Transformer1.MyProcessor(s -> s + " TRANSFORMED");
+        MyProcessor processor = new MyProcessor(s -> s + " TRANSFORMED");
 
         //Create chain of publisher, processor and subscriber
         publisher.subscribe(processor);     // publisher -> processor
