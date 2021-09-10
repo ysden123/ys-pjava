@@ -4,6 +4,7 @@
 
 package com.stulsoft.pjava.basics.collections.groupby;
 
+import com.stulsoft.pjava.basics.collections.DataObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,7 @@ public class GroupByEx1 {
                 new DataObject("n2", 2, 40));
         Map<Integer, List<DataObject>> grouped = list
                 .stream()
-                .collect(Collectors.groupingBy(DataObject::getAge));
+                .collect(Collectors.groupingBy(DataObject::age));
 
         logger.info("grouped: {}", grouped);
     }
@@ -53,8 +54,8 @@ public class GroupByEx1 {
                 new DataObject("n2", 2, 40));
         Map<Integer, Map<String, List<DataObject>>> grouped = list
                 .stream()
-                .collect(Collectors.groupingBy(DataObject::getAge,
-                        Collectors.groupingBy(DataObject::getName)));
+                .collect(Collectors.groupingBy(DataObject::age,
+                        Collectors.groupingBy(DataObject::name)));
 
         logger.info("grouped: {}", grouped);
     }

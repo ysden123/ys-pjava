@@ -4,6 +4,7 @@
 
 package com.stulsoft.pjava.basics.collections.sort;
 
+import com.stulsoft.pjava.basics.collections.DataObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +38,8 @@ public class SortEx1 {
 
         logger.info("Before sort: {}", list);
 
-        list.sort(Comparator.comparing(DataObject::getName)
-                .thenComparing(DataObject::getAge));
+        list.sort(Comparator.comparing(DataObject::name)
+                .thenComparing(DataObject::age));
         logger.info("After sort: {}", list);
     }
 
@@ -57,9 +58,9 @@ public class SortEx1 {
 
         var grouped = list
                 .stream()
-                .sorted(Comparator.comparing(DataObject::getName)
-                        .thenComparing(DataObject::getAge))
-                .collect(Collectors.groupingBy(DataObject::getName));
+                .sorted(Comparator.comparing(DataObject::name)
+                        .thenComparing(DataObject::age))
+                .collect(Collectors.groupingBy(DataObject::name));
 
         logger.info("After sort and grouping: {}", grouped);
     }
