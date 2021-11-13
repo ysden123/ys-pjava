@@ -11,7 +11,7 @@ import java.util.Random;
  * @author Yuriy Stul
  */
 public class SingletonEx1 {
-    private static Random random;
+    private static volatile Random random;
 
     public int nextInt(){
         if (random == null){
