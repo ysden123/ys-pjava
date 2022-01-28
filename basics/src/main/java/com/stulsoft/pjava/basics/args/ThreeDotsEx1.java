@@ -11,6 +11,7 @@ package com.stulsoft.pjava.basics.args;
  * @author Yuriy Stul
  */
 public class ThreeDotsEx1<T> {
+
     public static void main(String[] args) {
         System.out.println("==>main");
         ThreeDotsEx1<String> tde1 = new ThreeDotsEx1<>();
