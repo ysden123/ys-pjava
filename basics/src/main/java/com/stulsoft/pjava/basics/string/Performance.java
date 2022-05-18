@@ -2,7 +2,7 @@
  * Copyright (c) 2022 StulSoft
  */
 
-package com.stulsoft.pjava.basics.records;
+package com.stulsoft.pjava.basics.string;
 
 import java.util.concurrent.TimeUnit;
 
