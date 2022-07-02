@@ -17,12 +17,12 @@ public class ApplyFunction {
     /**
      * Returns length of string
      */
-    private static Function<String, Integer> f1 = String::length;
+    private static final Function<String, Integer> f1 = String::length;
 
     /**
      * Throws exception if input string is not empty; otherwise return integer 123
      */
-    private static Function<String, Integer> f2 = x -> {
+    private static final Function<String, Integer> f2 = x -> {
         if (x.length() > 1)
             throw new RuntimeException("Error with " + x);
         else return 123;
@@ -31,14 +31,14 @@ public class ApplyFunction {
     /**
      * Just prints input string plus "inside f3" word.
      */
-    private static Consumer<String> f3 = x -> System.out.println(x + " inside f3");
+    private static final Consumer<String> f3 = x -> System.out.println(x + " inside f3");
 
     /**
      * Just prints input string plus "inside f4" word.
      */
-    private static Consumer<String> f4 = x -> System.out.println(x + " inside f4");
+    private static final Consumer<String> f4 = x -> System.out.println(x + " inside f4");
 
-    private static Function<String, String> f5 = x -> x + " inside f5";
+    private static final Function<String, String> f5 = x -> x + " inside f5";
 
     /**
      * @param args arguments

@@ -19,7 +19,7 @@ public class InternalFunction2 {
 
         // Definition of function
         Consumer<Optional<String>> f1 = o -> {
-            String toOutput = String.format("Result is %s", (o.isPresent() ? o.get() : "null"));
+            String toOutput = String.format("Result is %s", (o.orElse("null")));
             System.out.println(toOutput);
         };
 
