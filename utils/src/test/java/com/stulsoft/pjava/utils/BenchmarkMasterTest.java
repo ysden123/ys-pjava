@@ -74,8 +74,8 @@ public class BenchmarkMasterTest {
         assertNotNull(results);
         assertEquals(3, results.size());
 
-        assertEquals("test 3", ((BenchmarkResult) results.toArray()[0]).getText());
-        assertEquals("test 2", ((BenchmarkResult) results.toArray()[1]).getText());
+        assertEquals("test 2", ((BenchmarkResult) results.toArray()[0]).getText());
+        assertEquals("test 3", ((BenchmarkResult) results.toArray()[1]).getText());
         assertEquals("test 1", ((BenchmarkResult) results.toArray()[2]).getText());
     }
 }
