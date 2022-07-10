@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  * @author Yuriy Stul.
  */
 public class RangeEx01 {
-    private static int N = 100000;
+    private static final int N = 100000;
 
     /**
      * Without parallel
@@ -81,7 +81,7 @@ public class RangeEx01 {
      */
     private static AbstractMap.SimpleEntry<String, Integer> test6() {
         int result = 0;
-        OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce((v1, v2) -> v1 + v2);
+        OptionalInt resultOptional = IntStream.range(0, N).parallel().reduce(Integer::sum);
         if (resultOptional.isPresent()) {
             result = -resultOptional.getAsInt();
         }

@@ -4,8 +4,8 @@
 
 package com.stulsoft.pjava.basics;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Right unit test.
@@ -17,7 +17,7 @@ import org.junit.Test;
 public class ForUnitTest2Test {
     private static ForUnitTest forUnitTest;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         forUnitTest = new ForUnitTest();
     }

@@ -1,7 +1,0 @@
-/*
- * Copyright (c) 2020. Yuriy Stul
- */
-
-dependencies{
-    implementation project(':utils')
-}

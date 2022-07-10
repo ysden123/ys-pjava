@@ -1,7 +1,0 @@
-/*
- * Copyright (c) 2020. Yuriy Stul
- */
-def typeSafeConfigVersion = '1.4.2'
-dependencies {
-    implementation group: 'com.typesafe', name: 'config', version: typeSafeConfigVersion
-}
