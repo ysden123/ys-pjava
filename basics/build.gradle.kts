@@ -4,4 +4,5 @@ plugins {
 
 dependencies{
     implementation(project(":utils"))
+    implementation("com.google.guava:guava:31.1-jre")
 }
