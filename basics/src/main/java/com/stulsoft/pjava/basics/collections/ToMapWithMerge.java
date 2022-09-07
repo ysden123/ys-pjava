@@ -40,6 +40,7 @@ public class ToMapWithMerge {
         System.out.println("==>main");
         test1();
         test2();
+        test3();
     }
 
     private static void test1() {
@@ -62,5 +63,20 @@ public class ToMapWithMerge {
         Map<Long, Container> map = list.stream().collect(Collectors.toMap(Container::getId, p -> p, (p1, p2) -> p1));
         System.out.println("list: " + list);
         System.out.println("map: " + map);
+    }
+
+    private static void test3() {
+        System.out.println("==>test3");
+        try {
+            List<Container> list = new ArrayList<>();
+            list.add(new Container(1L, "n1"));
+            list.add(new Container(1L, "n2"));
+            list.add(new Container(2L, "n3"));
+            Map<Long, Container> map = list.stream().collect(Collectors.toMap(Container::getId, Function.identity()));
+            System.out.println("list: " + list);
+            System.out.println("map: " + map);
+        }catch (IllegalStateException exception){
+            System.out.println("Exception: " + exception.getMessage());
+        }
     }
 }
