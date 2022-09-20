@@ -58,6 +58,7 @@ public class LinkedArrayListPerformance {
     private static Long testAddArrayList(Collection<String> data) {
         long start = System.currentTimeMillis();
         var list = new ArrayList<String>();
+//        var list = new ArrayList<String>(15);
         data.forEach(list::add);
         return System.currentTimeMillis() - start;
     }
