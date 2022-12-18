@@ -18,6 +18,7 @@ public class VoidFunc {
     private static Logger logger = LoggerFactory.getLogger(VoidFunc.class);
     private static void foo() {
         logger.info("==>foo");
+        System.out.printf("in foo ThreadID=%d%n", Thread.currentThread().getId());
         f1(() -> logger.info("In the lambda"));
         logger.info("<==foo");
     }
@@ -35,14 +36,18 @@ public class VoidFunc {
 
     public static void main(String[] args) {
         logger.info("==>main");
+        System.out.printf("0 ThreadID=%d%n", Thread.currentThread().getId());
         foo();
 
+        System.out.printf("1 ThreadID=%d%n", Thread.currentThread().getId());
         f1(() -> {
+            System.out.printf("2 ThreadID=%d%n", Thread.currentThread().getId());
             int i = (new Random()).nextInt();
             logger.info("Random i = {}", i);
         });
 
         f1(() -> {
+            System.out.printf("3 ThreadID=%d%n", Thread.currentThread().getId());
             int i = (new Random()).nextInt();
             logger.info("Random i = {}", i);
         });
